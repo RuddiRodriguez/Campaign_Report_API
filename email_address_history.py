@@ -31,10 +31,8 @@ def connection_to_db():
 
 def sqlc_query():
     sqlc = """
-    SELECT TOP 2000 
-		Emailadress,CustomerID
-    FROM usr.NL_Customertable
-    where Emailadress IS NOT NULL 
+    select email
+    from SHIVA_USR_COM.dbo.NL_EM_PL210330_Renovation
     
     """
 

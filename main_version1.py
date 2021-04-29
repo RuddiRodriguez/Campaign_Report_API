@@ -106,7 +106,10 @@ def email_addresses_history (email ='giona.rosinda@hotmail.com' ,userID = '11793
 #        'campaignRead':True   
 #           }
      
-   GetEmailAddressHistoryReq.emailAddress =email ;
+   GetEmailAddressHistoryReq.emailAddress =email 
+   GetEmailAddressHistoryReq.timestampFrom ="2021-04-01T00:00:00" 
+   GetEmailAddressHistoryReq.timestampTill ="2021-04-22T00:00:00" 
+   
      
     
    #GetEmailAddressesReq.mailingListIds = np.array([194795, 194797]);
@@ -125,17 +128,18 @@ def email_addresses_history (email ='giona.rosinda@hotmail.com' ,userID = '11793
 
 
 
-def get_campaign_data (user,token):
-    
+def get_campaign_data(userID='11793', userToken="F40A3704-84726810-732DA059-4549C832-3179A85CD2339373131",
+                      client=Client("https://soap.flexmail.eu/3.0.0/flexmail.wsdl")):
     GetCampaignsReq = client.factory.create('GetCampaignsReq')
-    GetCampaignsReq.header =  {
-            
-            'userId' : user,
-            'userToken' : token,
-            
-            }
+    GetCampaignsReq.header = {
+
+        'userId': userID,
+        'userToken': userToken,
+
+    }
     campaign_data = client.service.GetCampaigns(GetCampaignsReq)
     return campaign_data
+
 
 def get_dataframe (data):
     
@@ -182,12 +186,12 @@ def main(df):
 
 
 def main_with_data(new_column):
-    data = pd.read_csv(r'Z:\Python\Projects\NL_Automated_Reports\CRM\Campaign_reports_API\Primary_data.csv');
-    data[new_column] = None;
-    for index , row in data.iterrows():#table_campaing_Id_name.shape[0]):
-        report_results = reports (data.loc[index,'Id']);
-        data.loc [index,'Ratio'] = report_results.campaignReportType[13];
-        data.loc [index,'Date'] = report_results.campaignReportType[1];
+    data = pd.read_csv(r'D:\Python\Projects\NL_Automated_Reports\CRM\Campaign_reports_API\Primary_data.csv')
+    data[new_column] = None
+    for index , row in data[0:2].iterrows():#table_campaing_Id_name.shape[0]):
+        report_results = reports (data.loc[index,'Id'])
+        data.loc [index,'Ratio'] = report_results.campaignReportType[13]
+        data.loc [index,'Date'] = report_results.campaignReportType[1]
         
          #table_campaing_Id_name[index,'Id'].iloc[i].apply(lambda x:hit_links(x))
         #print(index)
