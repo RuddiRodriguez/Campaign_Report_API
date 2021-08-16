@@ -19,6 +19,7 @@ def get_data_frame(data):
     df = pd.DataFrame(dict(Name=[x[1] for x in data.campaignTypeItems], Id=[x[0] for x in data.campaignTypeItems],
                            Sent_Date=[x[3] for x in data.campaignTypeItems],
                            Message_Id=[x[8] for x in data.campaignTypeItems],
+                           Subject = [x[4] for x in data.campaignTypeItems],
                            MailingIds=[x[9] for x in data.campaignTypeItems],
                            Campaign_type=[x[13] for x in data.campaignTypeItems]))
     return df
